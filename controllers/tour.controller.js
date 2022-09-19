@@ -50,6 +50,18 @@ if (req.query.fields) {
     queries.fields = fields;
     console.log(fields);
   }
+  
+if (req.query.limit) {
+    const limit = req.query.limit.split(",").join(" ");
+    queries.limit = limit;
+    console.log(limit);
+  }
+
+if (req.query.page) {
+    const page = req.query.page.split(",").join(" ");
+    queries.page = page;
+    console.log(page);
+  }
 
   const tour = await getTourServices(filters, queries)
     res.status(200).json({

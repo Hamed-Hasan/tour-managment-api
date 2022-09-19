@@ -10,5 +10,8 @@ const tour = await Tour
 .find(filters)
 .select(queries.fields)
 .sort(queries.sortBy)
+.skip(queries.page)
+.limit(queries.limit)
+
 return tour;
 }
