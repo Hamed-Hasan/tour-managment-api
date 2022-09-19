@@ -32,10 +32,10 @@ const tourSchema = mongoose.Schema({
         },
         message: 'Price must be an integer'
     },
-    image: {
-        type: String,
-        required: true,
-    },
+    // image: {
+    //     type: String,
+    //     required: true,
+    // },
     status: {
         type: String,
         required: true,
