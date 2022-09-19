@@ -20,3 +20,13 @@ exports.getATourService = async (id) => {
     const tour = await Tour.findOne(id);
     return tour
     }
+
+exports.updateAllTourService = async (data) => {
+    const tours = [];
+    data.ids.forEach(tour => {
+        tours.push(Tour.updateOne({_id: tour.id}, tour.data, {runValidators:true}));
+    })
+    const tour = await Promise.all(tours);
+    console.log(tour)
+    return tour
+    }

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // post tour controller
 
 const Tour = require("../models/tour")
-const { createTourService, getTourServices, getATourService } = require("../services/tour.service")
+const { createTourService, getTourServices, getATourService, updateAllTourService } = require("../services/tour.service")
 
 exports.createTour = async (req, res) => {
    try {
@@ -101,6 +101,24 @@ exports.getATour = async (req, res) => {
      res.status(400).json({
          status: 'Fail',
          message: 'Tour getting Fail',
+         error: error.message
+     })
+    } 
+ }
+
+ exports.updateAllTour = async (req, res) => {
+    try {
+     const tour = await updateAllTourService(req.body)
+    
+     res.status(200).json({
+         status: 'success',
+         message: 'Tour updated Successfully',
+         data: tour,
+     })
+    } catch (error) {
+     res.status(400).json({
+         status: 'Fail',
+         message: 'Tour updated Fail',
          error: error.message
      })
     } 
