@@ -1,8 +1,8 @@
-
+const mongoose = require('mongoose');
 // post tour controller
 
 const Tour = require("../models/tour")
-const { createTourService, getTourServices } = require("../services/tour.service")
+const { createTourService, getTourServices, getATourService } = require("../services/tour.service")
 
 exports.createTour = async (req, res) => {
    try {
@@ -50,7 +50,7 @@ if (req.query.fields) {
     queries.fields = fields;
     console.log(fields);
   }
-  
+
 if (req.query.limit) {
     const limit = req.query.limit.split(",").join(" ");
     queries.limit = limit;
@@ -77,3 +77,23 @@ if (req.query.page) {
     })
    } 
 }
+
+
+exports.getATour = async (req, res) => {
+    try {
+        const id = req.params;
+     const tour = await getATourService({_id: mongoose.Types.ObjectId(id)})
+    
+     res.status(200).json({
+         status: 'success',
+         message: 'Getting a Tour Successfully',
+         data: tour,
+     })
+    } catch (error) {
+     res.status(400).json({
+         status: 'Fail',
+         message: 'Tour getting Fail',
+         error: error.message
+     })
+    } 
+ }

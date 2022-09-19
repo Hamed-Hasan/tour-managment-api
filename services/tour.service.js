@@ -15,3 +15,8 @@ const tour = await Tour
 
 return tour;
 }
+
+exports.getATourService = async (id) => {
+    const tour = await Tour.findOne(id);
+    return tour
+    }
