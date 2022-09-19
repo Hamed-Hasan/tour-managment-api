@@ -82,6 +82,14 @@ if (req.query.page) {
 exports.getATour = async (req, res) => {
     try {
         const id = req.params;
+
+        if(!mongoose.Types.ObjectId(id)){
+           return res.status(400).json({ 
+                status: false,
+                message: 'Invalid Tour Info',
+                error: error.message
+            })
+        }
      const tour = await getATourService({_id: mongoose.Types.ObjectId(id)})
     
      res.status(200).json({
