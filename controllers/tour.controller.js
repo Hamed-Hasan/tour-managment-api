@@ -2,7 +2,7 @@
 // post tour controller
 
 const Tour = require("../models/tour")
-const { createTourService, getTourService, getTourServices } = require("../services/tour.service")
+const { createTourService, getTourServices } = require("../services/tour.service")
 
 exports.createTour = async (req, res) => {
    try {
@@ -23,8 +23,35 @@ exports.createTour = async (req, res) => {
 }
 exports.getAllTour = async (req, res) => {
    try {
-    const tour = await getTourServices(req.query)
-   
+
+
+    let filters = { ... req.query };
+    const excludeFields = ['sort', 'page', 'limit'];
+    excludeFields.forEach((field) => delete filters[field]);
+    let filterString = JSON.stringify(filters);
+    filterString = filterString.replace(
+        /\b(gt|gte|lt|lte|inc)\b/g,
+        (match) => `$${match}`
+      );
+   console.log(filterString);
+filters = JSON.parse(filterString);
+console.log(filters)
+
+const queries = {};
+if(req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    queries.sortBy = sortBy;
+    console.log(sortBy);
+}
+
+
+if (req.query.fields) {
+    const fields = req.query.fields.split(",").join(" ");
+    queries.fields = fields;
+    console.log(fields);
+  }
+
+  const tour = await getTourServices(filters, queries)
     res.status(200).json({
         status: 'success',
         message: 'Tour getting Successfully',
