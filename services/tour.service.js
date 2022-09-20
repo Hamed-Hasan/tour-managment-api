@@ -30,3 +30,9 @@ exports.updateAllTourService = async (data) => {
     console.log(tour)
     return tour
     }
+
+exports.cheapestTourService = async (query) => {
+    
+    const tour = await Tour.find({price: {$lt: 118}})
+    return tour
+    }
