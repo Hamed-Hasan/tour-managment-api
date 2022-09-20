@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const viewCount = require('../middleware/viewCount');
 // post tour controller
 
 const Tour = require("../models/tour")
-const { createTourService, getTourServices, getATourService, updateAllTourService, cheapestTourService } = require("../services/tour.service")
+const { createTourService, getTourServices, getATourService, updateAllTourService, cheapestTourService, trendingTourService } = require("../services/tour.service")
 
 exports.createTour = async (req, res) => {
    try {
@@ -123,6 +124,24 @@ exports.getATour = async (req, res) => {
      })
     } 
  }
+ exports.trendingTour = viewCount,async (req, res) => {
+    try {
+     const tour = await trendingTourService(viewCount)
+    
+     res.status(200).json({
+         status: 'success',
+         message: 'Getting Top Trending Tour Successfully',
+         data: tour,
+     })
+    } catch (error) {
+     res.status(400).json({
+         status: 'Fail',
+         message: 'Fail The Trending Tour',
+         error: error.message
+     })
+    } 
+ }
+
  exports.cheapestTour = async (req, res) => {
     try {
      const tour = await cheapestTourService()

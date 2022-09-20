@@ -1,3 +1,4 @@
+const viewCount = require("../middleware/viewCount");
 const Tour = require("../models/tour")
 
 
@@ -31,8 +32,12 @@ exports.updateAllTourService = async (data) => {
     return tour
     }
 
+    exports.trendingTourService =  async (viewCount) => {
+        const tour = await Tour.find({viewCount:{$exists:true}, count})
+        return tour
+        }
+
 exports.cheapestTourService = async (query) => {
-    
     const tour = await Tour.find({price: {$lt: 118}})
     return tour
     }

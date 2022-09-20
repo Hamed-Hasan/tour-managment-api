@@ -8,6 +8,8 @@ router.route('/bulk-update')
 .patch(tourController.updateAllTour)
 router.route('/cheapest')
 .get(tourController.cheapestTour)
+router.route('/trending')
+.get(tourController.trendingTour)
 
 router.route('/')
 .post(tourController.createTour)
